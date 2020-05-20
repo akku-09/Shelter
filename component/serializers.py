@@ -33,9 +33,10 @@ class Metadata_Serializer(serializers.ModelSerializer):
     def child_function(self,param):
         request_object = self.context['request']
         shelter_slum_id = request_object.query_params.get('slum_id')
-        shelter_metadata_id = request_object.query_params.getlist('metadata_id_list')
+        shelter_metadata_id = request_object.query_params.getlist('metadata_id')
         slum = Slum.objects.get(id=shelter_slum_id)
-        comp = slum.components.filter(metadata_id=shelter_metadata_id)
+        comp = slum.components.filter(metadata_id__in=shelter_metadata_id)
+        print comp
         return ComponentSerializer(comp, many=True).data
     class Meta:
         model = Metadata

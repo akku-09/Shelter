@@ -16,9 +16,6 @@ class ComponentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = models.Metadata.objects.all()
         shelter_metadata_id = self.request.query_params.getlist('metadata_id', None)
-        value_list = [int(x[0][0]) for x in shelter_metadata_id if x]
-        print value_list
-        queryset = queryset.filter(id__in = value_list)
-        print(queryset)
+        queryset = queryset.filter(id__in = shelter_metadata_id)
         return queryset
 
